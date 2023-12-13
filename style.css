@@ -54,6 +54,7 @@ input[type=number].btn_none {
 .remains_text {
    display: flex;
    justify-content: space-between;
+   flex-wrap: wrap;
 }
 
 .remains_text p {
