@@ -38,17 +38,27 @@ inputElem.forEach((input) => {
 });
 
 budget.oninput = function() {dailyConsumption.value = Math.floor(budget.value / days);}
-usedUp.oninput = function() {
-   remains.innerText = Math.floor(dailyConsumption.value - usedUp.value);
-   forecastTextDays.innerText = Math.floor((dailyConsumption.value - usedUp.value) * days);
-}
+usedUp.oninput = function() {remains.innerText = Math.floor(dailyConsumption.value - usedUp.value);}
 
 function sendRemains() {
    let sumSet = Math.floor(budget.value - usedUp.value);
    let remainsSet = Math.floor(dailyConsumption.value - usedUp.value);
+   let consumptionSet = Math.floor(dailyConsumption.value);
+   let usedUpSet = Math.floor(usedUp.value);
    localStorage.setItem("Остаток", JSON.stringify(sumSet));
+   localStorage.setItem("Расход на день", JSON.stringify(consumptionSet));
+
+   let usedUpGet = JSON.parse(localStorage.getItem("Сколько израсходовано"));
+   let consumptionGet = JSON.parse(localStorage.getItem("Расход на день"));
+
+   if(usedUpGet > consumptionGet) {
+      localStorage.setItem("Сколько израсходовано", JSON.stringify(usedUpGet - consumptionGet));
+   } else {
+      localStorage.setItem("Сколько израсходовано", JSON.stringify(usedUpSet));
+   }
+   days = days - 1;
    localStorage.setItem("Остаток на день", JSON.stringify(remainsSet));
-   localStorage.setItem("Осталось дней", JSON.stringify(days - 1));
+   localStorage.setItem("Осталось дней", JSON.stringify(days));
    localStorage.setItem("Сегодня", currentDate);
 }
 
@@ -57,14 +67,24 @@ btnGet.addEventListener('click', (e) => {
    remainsTextBudget.innerText = JSON.parse(localStorage.getItem("Остаток"));
    remains.innerText = JSON.parse(localStorage.getItem("Остаток на день"));
    remainsTextDays.innerText = JSON.parse(localStorage.getItem("Осталось дней"));
+
+   let usedUpGet = JSON.parse(localStorage.getItem("Сколько израсходовано"));
+   let consumptionGet = JSON.parse(localStorage.getItem("Расход на день"));
+
+   let daysDeclination;
+   let quantity = Math.round(usedUpGet / consumptionGet);
+   quantity > 4 && quantity < 20 ? daysDeclination = "дней" :
+   quantity > 1 && quantity < 5 ? daysDeclination = "дня" :
+   quantity == 1 ? daysDeclination = "день" : "";
+   if(usedUpGet >= consumptionGet) forecastTextDays.innerText = `Экономьте бюджет: ${quantity + ' ' + daysDeclination}`;
 });
 
 localStorage.getItem("Сегодня") == currentDate ? btnSend.disabled = true : btnSend.disabled = false;
 
 formSend.addEventListener('submit', (e) => {
-   e.preventDefault();
+   // e.preventDefault();
    sendRemains();
-   e.target.reset();
+   // e.target.reset();
    localStorage.setItem("Сегодня", currentDate);
    btnSend.disabled = true;
 });
