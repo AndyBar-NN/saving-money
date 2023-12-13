@@ -105,7 +105,7 @@ button[disabled=""]:hover {
       flex-direction: column;
    }
    
-   .remains_text h3 {
+   .remains_text p {
       width: 100%;
    }
 }

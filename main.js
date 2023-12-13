@@ -40,21 +40,22 @@ inputElem.forEach((input) => {
 budget.oninput = function() {dailyConsumption.value = Math.floor(budget.value / days);}
 usedUp.oninput = function() {
    remains.innerText = Math.floor(dailyConsumption.value - usedUp.value);
-   forecastTextDays.innerText = Math.floor((dailyConsumption.value - usedUp.value) * 31);
+   forecastTextDays.innerText = Math.floor((dailyConsumption.value - usedUp.value) * days);
 }
 
 function sendRemains() {
    let sumSet = Math.floor(budget.value - usedUp.value);
+   let remainsSet = Math.floor(dailyConsumption.value - usedUp.value);
    localStorage.setItem("Остаток", JSON.stringify(sumSet));
+   localStorage.setItem("Остаток на день", JSON.stringify(remainsSet));
    localStorage.setItem("Осталось дней", JSON.stringify(days - 1));
    localStorage.setItem("Сегодня", currentDate);
 }
 
-
-
 btnGet.addEventListener('click', (e) => {
    e.preventDefault();
    remainsTextBudget.innerText = JSON.parse(localStorage.getItem("Остаток"));
+   remains.innerText = JSON.parse(localStorage.getItem("Остаток на день"));
    remainsTextDays.innerText = JSON.parse(localStorage.getItem("Осталось дней"));
 });
 
