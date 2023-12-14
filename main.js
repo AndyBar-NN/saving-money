@@ -7,6 +7,7 @@ let budget = document.querySelector('.budget');
 let btnSend = document.querySelector('.btn_send');
 let formSend = document.querySelector('#form_send');
 let btnGet = document.querySelector('.btn_get');
+let btnClear = document.querySelector('.btn_clear');
 let remainsTextBudget = document.querySelector('.remains_text-budget');
 let remainsTextDays = document.querySelector('.remains_text-days');
 let forecastTextDays = document.querySelector('.forecast_text-days');
@@ -76,15 +77,19 @@ btnGet.addEventListener('click', (e) => {
    quantity > 4 && quantity < 20 ? daysDeclination = "дней" :
    quantity > 1 && quantity < 5 ? daysDeclination = "дня" :
    quantity == 1 ? daysDeclination = "день" : "";
-   if(usedUpGet >= consumptionGet) forecastTextDays.innerText = `Экономьте бюджет: ${quantity + ' ' + daysDeclination}`;
+   if(usedUpGet >= consumptionGet && (quantity != NaN && consumptionGet != undefined)) forecastTextDays.innerText = `Экономьте бюджет: ${quantity + ' ' + daysDeclination}`;
+});
+
+btnClear.addEventListener('click', (e) => {
+   e.preventDefault();
+   localStorage.clear();
+   location.reload();
 });
 
 localStorage.getItem("Сегодня") == currentDate ? btnSend.disabled = true : btnSend.disabled = false;
 
-formSend.addEventListener('submit', (e) => {
-   // e.preventDefault();
+formSend.addEventListener('submit', () => {
    sendRemains();
-   // e.target.reset();
    localStorage.setItem("Сегодня", currentDate);
    btnSend.disabled = true;
 });

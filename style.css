@@ -83,7 +83,7 @@ input[type=number].btn_none {
    color: #fff;
  }
 
- .btn_send {
+ .btn_red {
    background-image: linear-gradient(90deg, red 0% , #1f02c0 100%);
  }
 
@@ -93,6 +93,10 @@ input[type=number].btn_none {
 	flex-wrap: wrap;
    margin-top: 25px;
 }
+
+.block_btn button {
+   width: calc(98% / 3);
+} 
 
 button[disabled=""],
 button[disabled=""]:hover {
@@ -113,4 +117,11 @@ button[disabled=""]:hover {
    .remains_text p {
       width: 100%;
    }
+}
+
+@media screen and (max-width: 600px) {
+   .block_btn button {
+      width: 100%;
+      margin-bottom: 10px;
+   } 
 }
