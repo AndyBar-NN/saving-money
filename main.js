@@ -3,11 +3,11 @@ let inputElem = document.querySelectorAll('input[type="number"]');
 let dailyConsumption = document.querySelector('.daily_consumption');
 let usedUp = document.querySelector('.used_up');
 let remains = document.querySelector('.remains');
+let remainsDays = document.querySelector('.remains_days');
 let budget = document.querySelector('.budget');
 let btnSend = document.querySelector('.btn_send');
 let formSend = document.querySelector('#form_send');
 let btnGet = document.querySelector('.btn_get');
-let btnClear = document.querySelector('.btn_clear');
 let remainsTextBudget = document.querySelector('.remains_text-budget');
 let remainsTextDays = document.querySelector('.remains_text-days');
 let forecastTextDays = document.querySelector('.forecast_text-days');
@@ -37,7 +37,9 @@ inputElem.forEach((input) => {
       input.value = input.value.replace(/[^0-9\.]/g, '');
    });
 });
-
+if(remainsDays.value) {
+   console.log('test');
+}
 budget.oninput = function() {dailyConsumption.value = Math.floor(budget.value / days);}
 usedUp.oninput = function() {remains.innerText = Math.floor(dailyConsumption.value - usedUp.value);}
 
@@ -46,6 +48,7 @@ function sendRemains() {
    let remainsSet = Math.floor(dailyConsumption.value - usedUp.value);
    let consumptionSet = Math.floor(dailyConsumption.value);
    let usedUpSet = Math.floor(usedUp.value);
+
    localStorage.setItem("Остаток", JSON.stringify(sumSet));
    localStorage.setItem("Расход на день", JSON.stringify(consumptionSet));
 
@@ -57,9 +60,16 @@ function sendRemains() {
    } else {
       localStorage.setItem("Сколько израсходовано", JSON.stringify(usedUpSet));
    }
+
    days = days - 1;
+
    localStorage.setItem("Остаток на день", JSON.stringify(remainsSet));
-   localStorage.setItem("Осталось дней", JSON.stringify(days));
+
+   if(remainsDays.value) {
+      localStorage.setItem("Осталось дней", JSON.stringify(Math.round(remainsDays.value)));
+   } else {
+      localStorage.setItem("Осталось дней", JSON.stringify(days));
+   }
    localStorage.setItem("Сегодня", currentDate);
 }
 
@@ -78,12 +88,6 @@ btnGet.addEventListener('click', (e) => {
    quantity > 1 && quantity < 5 ? daysDeclination = "дня" :
    quantity == 1 ? daysDeclination = "день" : "";
    if(usedUpGet >= consumptionGet && (quantity != NaN && consumptionGet != undefined)) forecastTextDays.innerText = `Экономьте бюджет: ${quantity + ' ' + daysDeclination}`;
-});
-
-btnClear.addEventListener('click', (e) => {
-   e.preventDefault();
-   localStorage.clear();
-   location.reload();
 });
 
 localStorage.getItem("Сегодня") == currentDate ? btnSend.disabled = true : btnSend.disabled = false;

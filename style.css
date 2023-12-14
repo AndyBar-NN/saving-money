@@ -94,10 +94,6 @@ input[type=number].btn_none {
    margin-top: 25px;
 }
 
-.block_btn button {
-   width: calc(98% / 3);
-} 
-
 button[disabled=""],
 button[disabled=""]:hover {
   background-origin: inherit;
@@ -123,5 +119,5 @@ button[disabled=""]:hover {
    .block_btn button {
       width: 100%;
       margin-bottom: 10px;
-   } 
+   }
 }

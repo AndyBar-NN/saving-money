@@ -18,15 +18,16 @@
                <p class="forecast_text-days"></p>
             </div>
             <hr>
-            <label for="">Бюджет на месяц</label>
-            <input class="budget" type="number" min="0" placeholder="Бюджет на месяц" required></input>
-            <label for="">Расход на день</label>
+            <label for="">Бюджет на месяц*</label>
+            <input class="budget" type="number" min="0" placeholder="Ваш бюджет" required></input>
+            <label for="">Остаток дней</label>
+            <input class="remains_days" type="number" min="0" max="31" placeholder="Задано 31 день"></input>
+            <label for="">Расход на день*</label>
             <input class="daily_consumption btn_none" type="number" min="0" placeholder="(подставляется автоматически)" required></input>
-            <label for="">Сколько израсходовано</label>
-            <input class="used_up" type="number" min="0" placeholder="Сколько израсходовано" required></input>
+            <label for="">Фактический расход*</label>
+            <input class="used_up" type="number" min="0" placeholder="Сколько израсходовано за день" required></input>
             <div class="block_btn">
                <button class="btn btn_get">Информация</button>
-               <button type="submit" class="btn btn_red btn_clear">Удалить сохранение</button>
                <button type="submit" class="btn btn_red btn_send">Сохранить</button>
             </div>
          </form>
