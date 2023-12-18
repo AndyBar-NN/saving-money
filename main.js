@@ -28,6 +28,7 @@ let arrDate = [hours, minutes, seconds].join(':');
 let days = JSON.parse(localStorage.getItem("Осталось дней"));
 
 if(days == 0 || days == null) {
+   localStorage.clear();
    days = 31;
 }
 
@@ -37,9 +38,7 @@ inputElem.forEach((input) => {
       input.value = input.value.replace(/[^0-9\.]/g, '');
    });
 });
-if(remainsDays.value) {
-   console.log('test');
-}
+
 budget.oninput = function() {dailyConsumption.value = Math.floor(budget.value / days);}
 usedUp.oninput = function() {remains.innerText = Math.floor(dailyConsumption.value - usedUp.value);}
 
@@ -55,10 +54,15 @@ function sendRemains() {
    let usedUpGet = JSON.parse(localStorage.getItem("Сколько израсходовано"));
    let consumptionGet = JSON.parse(localStorage.getItem("Расход на день"));
 
-   if(usedUpGet > consumptionGet) {
+   if(usedUpGet > consumptionGet && usedUpSet == 0) {
       localStorage.setItem("Сколько израсходовано", JSON.stringify(usedUpGet - consumptionGet));
    } else {
-      localStorage.setItem("Сколько израсходовано", JSON.stringify(usedUpSet));
+      if(usedUpGet > consumptionGet) {
+         let remainsItem = JSON.parse(localStorage.getItem("Остаток на день"));
+         localStorage.setItem("Сколько израсходовано", JSON.stringify(usedUpSet + Math.abs(remainsItem)));
+      } else {
+         localStorage.setItem("Сколько израсходовано", JSON.stringify(usedUpSet));
+      }
    }
 
    days = days - 1;
@@ -90,10 +94,10 @@ btnGet.addEventListener('click', (e) => {
    if(usedUpGet >= consumptionGet && (quantity != NaN && consumptionGet != undefined)) forecastTextDays.innerText = `Экономьте бюджет: ${quantity + ' ' + daysDeclination}`;
 });
 
-localStorage.getItem("Сегодня") == currentDate ? btnSend.disabled = true : btnSend.disabled = false;
+// localStorage.getItem("Сегодня") == currentDate ? btnSend.disabled = true : btnSend.disabled = false;
 
 formSend.addEventListener('submit', () => {
    sendRemains();
-   localStorage.setItem("Сегодня", currentDate);
-   btnSend.disabled = true;
+   // localStorage.setItem("Сегодня", currentDate);
+   // btnSend.disabled = true;
 });

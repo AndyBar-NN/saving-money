@@ -104,6 +104,12 @@ button[disabled=""]:hover {
   opacity: 0.2;
 }
 
+@media screen and (max-height: 600px) {
+   body {
+      height: auto;
+   }
+}
+
 @media screen and (max-width: 800px) {
    .remains_text {
       display: flex;
