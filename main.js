@@ -94,10 +94,10 @@ btnGet.addEventListener('click', (e) => {
    if(usedUpGet >= consumptionGet && (quantity != NaN && consumptionGet != undefined)) forecastTextDays.innerText = `Экономьте бюджет: ${quantity + ' ' + daysDeclination}`;
 });
 
-// localStorage.getItem("Сегодня") == currentDate ? btnSend.disabled = true : btnSend.disabled = false;
+localStorage.getItem("Сегодня") == currentDate ? btnSend.disabled = true : btnSend.disabled = false;
 
 formSend.addEventListener('submit', () => {
    sendRemains();
-   // localStorage.setItem("Сегодня", currentDate);
-   // btnSend.disabled = true;
+   localStorage.setItem("Сегодня", currentDate);
+   btnSend.disabled = true;
 });
