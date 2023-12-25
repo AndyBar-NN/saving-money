@@ -40,7 +40,10 @@ inputElem.forEach((input) => {
 });
 
 budget.oninput = function() {dailyConsumption.value = Math.floor(budget.value / days);}
-usedUp.oninput = function() {remains.innerText = Math.floor(dailyConsumption.value - usedUp.value);}
+usedUp.oninput = function() {
+   remains.innerText = Math.floor(dailyConsumption.value - usedUp.value);
+   remains.innerText <= 0 ? remains.style.color = 'red' : remains.style.color = 'lime';
+}
 
 function sendRemains() {
    let sumSet = Math.floor(budget.value - usedUp.value);
@@ -80,7 +83,6 @@ function sendRemains() {
 btnGet.addEventListener('click', (e) => {
    e.preventDefault();
    remainsTextBudget.innerText = JSON.parse(localStorage.getItem("Остаток"));
-   remains.innerText = JSON.parse(localStorage.getItem("Остаток на день"));
    remainsTextDays.innerText = JSON.parse(localStorage.getItem("Осталось дней"));
 
    let usedUpGet = JSON.parse(localStorage.getItem("Сколько израсходовано"));
